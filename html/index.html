@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Início - ONG Transforma Vida</title>
+    <meta name="description" content="Conheça nossa ONG e saiba como ajudar.">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="container">
+    <header>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <nav>
+            <ul id="menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="projetos.html">Projetos</a></li>
+                <li><a href="cadastro.html">Cadastre-se</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="grid">
+            <div class="card" style="grid-column: span 12;">
+                <img src="../images/logo_ong.png" alt="Logo da ONG" width="125">
+                <h2>Sobre Nós</h2>
+                <p>Somos uma organização não governamental que atua há 10 anos transformando a vida de milhares de pessoas.</p>
+                <img src="../images/foto_equipe.png" alt="Foto da equipe da ONG" width="48.5%">
+            </div>
+        </section>
+
+        <section class="grid">
+            <div class="card" style="grid-column: span 12;">
+                <h2>Contato</h2>
+                <address>
+                    <p>Email: contato@ongtransformavida.org</p>
+                    <p>Telefone: (11) 1234-5678</p>
+                    <p>Endereço: Rua das Flores, 123 - São Paulo, SP</p>
+                </address>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 ONG Transforma Vida. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        // Menu Hambúrguer
+        const menuToggle = document.getElementById('menuToggle');
+        const menu = document.getElementById('menu');
+
+        menuToggle.addEventListener('click', () => {
+            menu.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

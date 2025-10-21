@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projetos - ONG Transforma Vida</title>
+    <meta name="description" content="Conheça nossos projetos e saiba como participar.">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="container">
+    <header>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <nav>
+            <ul id="menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="projetos.html">Projetos</a></li>
+                <li><a href="cadastro.html">Cadastre-se</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="grid">
+            <div class="card" style="grid-column: span 12;">
+                <img src="../images/logo_ong.png" alt="Logo da ONG" width="125">
+                <h2>Nossos Projetos</h2>
+            </div>
+            <article class="card" style="grid-column: span 6;">
+                <h3>Projeto Educar</h3>
+                <p>Oferecemos aulas de reforço escolar para crianças carentes.</p>
+                <img src="../images/projeto_educar.png" alt="Crianças estudando" width="100%">
+            </article>
+            <article class="card" style="grid-column: span 6;">
+                <h3>Projeto Alimentação Saudável</h3>
+                <p>Distribuímos cestas básicas e oferecemos orientação nutricional.</p>
+                <img src="../images/projeto_alimenta.png" alt="Distribuição de alimentos" width="100%">
+            </article>
+        </section>
+
+        <section class="grid">
+            <div class="card" style="grid-column: span 12;">
+                <h2>Voluntariado</h2>
+                <p>Venha ser um voluntário e fazer a diferença na comunidade.</p>
+                <a href="cadastro.html" class="btn">Seja Voluntário</a>
+            </div>
+        </section>
+
+        <section class="grid">
+            <div class="card" style="grid-column: span 12;">
+                <h2>Doações</h2>
+                <p>Sua doação é muito importante para continuarmos nosso trabalho.</p>
+                <p>Pix: doe@ongtransformavida.org</p>
+                <a href="cadastro.html" class="btn btn-secondary">Fazer Doação</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 ONG Transforma Vida. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        // Menu Hambúrguer
+        const menuToggle = document.getElementById('menuToggle');
+        const menu = document.getElementById('menu');
+
+        menuToggle.addEventListener('click', () => {
+            menu.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
