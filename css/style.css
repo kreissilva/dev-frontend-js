@@ -15,6 +15,24 @@
   --neutral-700: #424242;
   --neutral-800: #212121;
   --neutral-900: #000000;
+  
+  /* Cores para modo escuro */
+  --dark-primary: #4CAF7A;
+  --dark-primary-dark: #2E8B57;
+  --dark-primary-light: #6ECF9A;
+  --dark-secondary: #FF8C5A;
+  --dark-secondary-dark: #FF6B35;
+  --dark-secondary-light: #FFAD7A;
+  --dark-bg: #121212;
+  --dark-surface: #1E1E1E;
+  --dark-text: #E0E0E0;
+  
+  /* Cores para alto contraste */
+  --hc-primary: #00FF00;
+  --hc-secondary: #FFFF00;
+  --hc-bg: #000000;
+  --hc-text: #FFFFFF;
+  --hc-border: #FFFFFF;
 
   /* Tipografia */
   --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -42,6 +60,19 @@
   --breakpoint-xl: 1200px;
 }
 
+/* Estilos para acessibilidade */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
 /* Reset e estilos base */
 * {
   margin: 0;
@@ -55,6 +86,34 @@ body {
   line-height: 1.6;
   color: var(--neutral-800);
   background-color: var(--neutral-100);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Modo escuro */
+body.dark-mode {
+  background-color: var(--dark-bg);
+  color: var(--dark-text);
+}
+
+/* Modo de alto contraste */
+body.high-contrast {
+  background-color: var(--hc-bg);
+  color: var(--hc-text);
+}
+
+/* Foco visível para acessibilidade */
+:focus {
+  outline: 3px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+body.dark-mode :focus {
+  outline-color: var(--dark-primary-light);
+}
+
+body.high-contrast :focus {
+  outline: 3px solid var(--hc-secondary);
+  outline-offset: 2px;
 }
 
 /* Layout Grid Principal */
@@ -68,6 +127,18 @@ header, footer {
   background-color: var(--primary-color);
   color: var(--neutral-100);
   padding: var(--space-2) var(--space-4);
+}
+
+body.dark-mode header, 
+body.dark-mode footer {
+  background-color: var(--dark-primary-dark);
+}
+
+body.high-contrast header, 
+body.high-contrast footer {
+  background-color: var(--hc-bg);
+  border-top: 2px solid var(--hc-border);
+  border-bottom: 2px solid var(--hc-border);
 }
 
 /* Navegação */
@@ -89,11 +160,67 @@ nav a:hover, nav a:focus {
   background-color: var(--primary-dark);
 }
 
+body.dark-mode nav a:hover, 
+body.dark-mode nav a:focus {
+  background-color: var(--dark-primary);
+}
+
+body.high-contrast nav a {
+  color: var(--hc-text);
+  border: 1px solid var(--hc-border);
+}
+
+body.high-contrast nav a:hover, 
+body.high-contrast nav a:focus {
+  background-color: var(--hc-primary);
+  color: var(--hc-bg);
+}
+
+/* Estilos para botões de tema */
+.theme-toggle {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.theme-btn {
+  background: transparent;
+  border: 1px solid var(--neutral-300);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--neutral-100);
+  transition: all 0.3s;
+}
+
+.theme-btn:hover, .theme-btn:focus {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: scale(1.1);
+}
+
+body.dark-mode .theme-btn {
+  color: var(--dark-text);
+  border-color: var(--dark-primary);
+}
+
+body.high-contrast .theme-btn {
+  color: var(--hc-text);
+  border-color: var(--hc-border);
+  border-width: 2px;
+}
+
 /* Menu Hambúrguer para Mobile */
 .menu-toggle {
   display: none;
   flex-direction: column;
   cursor: pointer;
+  padding: 8px;
+  background: transparent;
+  border: none;
+  z-index: 100;
 }
 
 .menu-toggle span {
@@ -102,6 +229,15 @@ nav a:hover, nav a:focus {
   background-color: var(--neutral-100);
   margin: 3px 0;
   transition: 0.3s;
+}
+
+body.dark-mode .menu-toggle span {
+  background-color: var(--dark-text);
+}
+
+body.high-contrast .menu-toggle span {
+  background-color: var(--hc-text);
+  height: 4px;
 }
 
 /* Conteúdo Principal */
@@ -134,6 +270,17 @@ main {
   box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
+body.dark-mode .card {
+  background-color: var(--dark-surface);
+  border-color: var(--dark-primary-dark);
+}
+
+body.high-contrast .card {
+  background-color: var(--hc-bg);
+  border: 2px solid var(--hc-border);
+  box-shadow: none;
+}
+
 /* Botões */
 .btn {
   display: inline-block;
@@ -146,11 +293,17 @@ main {
   text-decoration: none;
   font-size: var(--font-size-base);
   transition: background-color 0.3s, transform 0.2s;
+  position: relative;
 }
 
 .btn:hover, .btn:focus {
   background-color: var(--primary-dark);
   transform: translateY(-1px);
+}
+
+.btn:focus-visible {
+  outline: 3px solid var(--primary-dark);
+  outline-offset: 2px;
 }
 
 .btn-secondary {
@@ -159,6 +312,38 @@ main {
 
 .btn-secondary:hover, .btn-secondary:focus {
   background-color: var(--secondary-dark);
+}
+
+/* Botões em modo escuro */
+body.dark-mode .btn {
+  background-color: var(--dark-primary);
+  color: var(--dark-bg);
+}
+
+body.dark-mode .btn:hover, 
+body.dark-mode .btn:focus {
+  background-color: var(--dark-primary-light);
+}
+
+body.dark-mode .btn-secondary {
+  background-color: var(--dark-secondary);
+}
+
+body.dark-mode .btn-secondary:hover, 
+body.dark-mode .btn-secondary:focus {
+  background-color: var(--dark-secondary-light);
+}
+
+/* Botões em alto contraste */
+body.high-contrast .btn {
+  background-color: var(--hc-primary);
+  color: var(--hc-bg);
+  border: 2px solid var(--hc-border);
+}
+
+body.high-contrast .btn-secondary {
+  background-color: var(--hc-secondary);
+  color: var(--hc-bg);
 }
 
 /* Formulários */
@@ -171,6 +356,14 @@ fieldset {
   border: 1px solid var(--neutral-300);
   border-radius: 4px;
   padding: var(--space-3);
+}
+
+body.dark-mode fieldset {
+  border-color: var(--dark-primary);
+}
+
+body.high-contrast fieldset {
+  border: 2px solid var(--hc-border);
 }
 
 legend {
@@ -188,17 +381,66 @@ label {
   font-weight: 600;
 }
 
-input, select {
+input, select, textarea {
   padding: var(--space-1);
   border: 1px solid var(--neutral-400);
   border-radius: 4px;
   font-size: var(--font-size-base);
+  background-color: var(--neutral-100);
+  color: var(--neutral-800);
 }
 
-input:focus, select:focus {
+input:focus, select:focus, textarea:focus {
   outline: none;
   border-color: var(--primary-color);
   box-shadow: 0 0 0 2px rgba(46, 139, 87, 0.2);
+}
+
+body.dark-mode input, 
+body.dark-mode select, 
+body.dark-mode textarea {
+  background-color: var(--dark-surface);
+  color: var(--dark-text);
+  border-color: var(--dark-primary);
+}
+
+body.high-contrast input, 
+body.high-contrast select, 
+body.high-contrast textarea {
+  background-color: var(--hc-bg);
+  color: var(--hc-text);
+  border: 2px solid var(--hc-border);
+}
+
+/* Links */
+a {
+  color: var(--primary-color);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+a:hover, a:focus {
+  color: var(--primary-dark);
+}
+
+body.dark-mode a {
+  color: var(--dark-primary-light);
+}
+
+body.dark-mode a:hover, 
+body.dark-mode a:focus {
+  color: var(--dark-primary);
+}
+
+body.high-contrast a {
+  color: var(--hc-primary);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
+body.high-contrast a:hover, 
+body.high-contrast a:focus {
+  color: var(--hc-secondary);
 }
 
 /* Responsividade */
@@ -236,4 +478,30 @@ input:focus, select:focus {
   .grid {
     grid-template-columns: repeat(12, 1fr);
   }
+}
+
+/* Skip to content link for keyboard users */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--primary-color);
+  color: white;
+  padding: 8px;
+  z-index: 100;
+  transition: top 0.3s;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+body.dark-mode .skip-link {
+  background: var(--dark-primary);
+}
+
+body.high-contrast .skip-link {
+  background: var(--hc-primary);
+  color: var(--hc-bg);
+  border: 2px solid var(--hc-border);
 }

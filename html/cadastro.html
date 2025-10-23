@@ -8,24 +8,40 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body class="container">
+    <a href="#conteudo-principal" class="skip-link">Pular para o conteúdo</a>
     <header>
         <div style="display: flex; justify-content: space-between; align-items: center;">
-            <div class="menu-toggle" id="menuToggle">
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu de navegação" aria-expanded="false">
                 <span></span>
                 <span></span>
                 <span></span>
+            </button>
+            <div class="theme-toggle">
+                <button id="darkModeToggle" aria-label="Alternar modo escuro" class="theme-btn">
+                    <span class="sr-only">Modo escuro</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 3a9 9 0 109 9c0-4.97-4.03-9-9-9z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <button id="highContrastToggle" aria-label="Alternar alto contraste" class="theme-btn">
+                    <span class="sr-only">Alto contraste</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                        <path d="M12 2v20M2 12h20" stroke="currentColor" stroke-width="2" />
+                    </svg>
+                </button>
             </div>
         </div>
-        <nav>
-            <ul id="menu">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="projetos.html">Projetos</a></li>
-                <li><a href="cadastro.html">Cadastre-se</a></li>
+        <nav aria-label="Menu principal">
+            <ul id="menu" role="menubar">
+                <li role="none"><a href="index.html" role="menuitem">Home</a></li>
+                <li role="none"><a href="projetos.html" role="menuitem">Projetos</a></li>
+                <li role="none"><a href="cadastro.html" role="menuitem" aria-current="page">Cadastre-se</a></li>
             </ul>
         </nav>
     </header>
 
-    <main>
+    <main id="conteudo-principal">
         <div class="grid">
             <div class="card" style="grid-column: span 12;">
                 <img src="../images/logo_ong.png" alt="Logo da ONG" width="125">
@@ -88,8 +104,14 @@
         <p>&copy; 2025 ONG Transforma Vida. Todos os direitos reservados.</p>
     </footer>
 
+    <script src="../js/app.min.js"></script>
     <script>
-        // Aplicar máscaras
+        document.addEventListener("DOMContentLoaded", function() {
+            const router = new SPARouter("conteudo-principal");
+            router.initAccessibility();
+            router.initThemeToggles();
+            
+            // Aplicar máscaras
         document.getElementById('cpf').addEventListener('input', function(e) {
             let value = e.target.value.replace(/\D/g, '');
             if (value.length <= 11) {
@@ -122,8 +144,9 @@
         const menu = document.getElementById('menu');
 
         menuToggle.addEventListener('click', () => {
-            menu.classList.toggle('active');
+        menu.classList.toggle('active');
+          });
         });
-    </script>
-</body>
-</html>
+      </script>
+  </body>
+  </html>

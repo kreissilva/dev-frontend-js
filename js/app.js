@@ -2,13 +2,16 @@
 class SPARouter {
     constructor() {
         this.routes = {};
-        this.rootElem = document.getElementById('main-content');
+        this.rootElem = document.getElementById('main-content') || document.getElementById('conteudo-principal');
         this.init();
     }
 
     init() {
         window.addEventListener('popstate', () => this.loadRoute(window.location.pathname));
         document.addEventListener('DOMContentLoaded', () => {
+            // Inicializar funcionalidades de acessibilidade
+            this.initAccessibility();
+            
             document.body.addEventListener('click', (e) => {
                 if (e.target.matches('[data-link]')) {
                     e.preventDefault();
@@ -17,6 +20,99 @@ class SPARouter {
             });
             this.loadRoute(window.location.pathname);
         });
+    }
+    
+    // Funcionalidades de acessibilidade
+    initAccessibility() {
+        // Menu Hambúrguer
+        const menuToggle = document.getElementById('menuToggle');
+        const menu = document.getElementById('menu');
+        
+        if (menuToggle && menu) {
+            menuToggle.addEventListener('click', () => {
+                const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+                menuToggle.setAttribute('aria-expanded', !isExpanded);
+                menu.classList.toggle('active');
+            });
+        }
+
+        // Navegação por teclado
+        const menuItems = document.querySelectorAll('[role="menuitem"]');
+        
+        menuItems.forEach((item, index) => {
+            item.addEventListener('keydown', (e) => {
+                let targetItem;
+                
+                switch(e.key) {
+                    case 'ArrowRight':
+                        targetItem = index < menuItems.length - 1 ? menuItems[index + 1] : menuItems[0];
+                        break;
+                    case 'ArrowLeft':
+                        targetItem = index > 0 ? menuItems[index - 1] : menuItems[menuItems.length - 1];
+                        break;
+                    case 'Escape':
+                        if (menu) {
+                            menu.classList.remove('active');
+                            if (menuToggle) {
+                                menuToggle.setAttribute('aria-expanded', 'false');
+                                menuToggle.focus();
+                            }
+                        }
+                        break;
+                    default:
+                        return;
+                }
+                
+                if (targetItem) {
+                    targetItem.focus();
+                    e.preventDefault();
+                }
+            });
+        });
+
+        // Modo escuro e alto contraste
+        this.initThemeToggles();
+    }
+    
+    // Configuração dos botões de tema
+    initThemeToggles() {
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const highContrastToggle = document.getElementById('highContrastToggle');
+        
+        if (darkModeToggle) {
+            darkModeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                document.body.classList.remove('high-contrast');
+                
+                // Salvar preferência do usuário
+                const isDarkMode = document.body.classList.contains('dark-mode');
+                localStorage.setItem('darkMode', isDarkMode);
+            });
+        }
+        
+        if (highContrastToggle) {
+            highContrastToggle.addEventListener('click', () => {
+                document.body.classList.toggle('high-contrast');
+                document.body.classList.remove('dark-mode');
+                
+                // Salvar preferência do usuário
+                const isHighContrast = document.body.classList.contains('high-contrast');
+                localStorage.setItem('highContrast', isHighContrast);
+            });
+        }
+
+        // Carregar preferência salva
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+        } else if (localStorage.getItem('highContrast') === 'true') {
+            document.body.classList.add('high-contrast');
+        } else {
+            // Detectar preferência do sistema
+            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+            if (prefersDarkScheme.matches) {
+                document.body.classList.add('dark-mode');
+            }
+        }
     }
 
     addRoute(path, template) {
